@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+NZ+Basic:wght@100..400&display=swap');
+
+h1, h2, h3 {
+    color: var(--textPrimary);
+    font-family: "Merriweather", serif;
+}
+
+h1 {
+    font-size: 3rem;
+}
+h2 {
+    font-size: 2.3rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+
+p, a {
+    color: var(--textSecondary);
+    font-family: "Playwrite NZ Basic", cursive;
+}
+
+p{
+    font-size: 1.2rem; 
+}
+
+a {
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent);
+}

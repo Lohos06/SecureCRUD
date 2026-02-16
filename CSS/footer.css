@@ -1,0 +1,16 @@
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 2rem;
+
+    background-color: var(--bgPrimary);
+}
+
+.authors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
