@@ -13,7 +13,13 @@ if (!isset($_SESSION['token_article_add']) || empty($_SESSION['token_article_add
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inscription</title>
 </head>
-
+    <header>
+        <nav>
+            <a href="index.php">HomePage</a>
+            <a href="inscription.php">inscription</a>
+            <a href="connexion.php">connexion</a>
+        </nav>
+    </header>
 <body>
   <form action="traitement.php" method="post">
     <input type="hidden" name="token" value="<?= $_SESSION['token_article_add']; ?>">
