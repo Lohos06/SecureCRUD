@@ -13,5 +13,8 @@
             <a href="connexion.php">connexion</a>
         </nav>
     </header>
+    <main>
+        
+    </main>
 </body>
 </html>
