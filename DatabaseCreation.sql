@@ -6,7 +6,7 @@ USE SecureUser;
 CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     pseudo VARCHAR(255),
-    pasword VARCHAR(255),
+    password VARCHAR(255),
     biography TEXT
 );
 
