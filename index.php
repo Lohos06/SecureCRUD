@@ -10,7 +10,7 @@
 // }
 
 
-// Protectin des headers dpour l'exterieur
+// Protectin des headers pour l'exterieur
 
 // ne pas pouvoir afficher le site dans les i-frames en dehors de notre site
 header("X-Frame-Options: SAMEORIGIN"); 
