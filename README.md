@@ -26,10 +26,10 @@ Attaques XSS :
 
 Attaques CSRF : 
 - tokens CSRF (correspondance site/session et POST) pour eviter les manipulations par outils externes
-- attribut SameSite
+- attribut SameSite dans les headers
 
 Bonne Pratique :
-- hashage du mot de passe (ByCript)
+- hashage du mot de passe (algorytme ByCript)
 
 ## Securités non mise en place :
 
