@@ -1,16 +1,29 @@
 footer {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 
     padding: 2rem;
+    gap: 2rem;
 
     background-color: var(--bgPrimary);
 }
 
 .authors {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+}
+
+@media (width > 768px) {
+  footer {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  .authors {
+    flex-direction: row;
+  }
 }

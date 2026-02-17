@@ -1,14 +1,28 @@
 header {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 
     padding: 2rem;
+    gap: 2rem;
 
     background-color: var(--bgPrimary);
 }
 
 nav {
     display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media (width > 768px) {
+  header {
+    flex-direction: row;
     gap: 1rem;
+  }
+  nav {
+    flex-direction: row;
+    gap: 1rem;
+  }
 }
