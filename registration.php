@@ -17,7 +17,7 @@ if (!isset($_SESSION['token_article_add']) || empty($_SESSION['token_article_add
         <nav>
             <a href="index.php">HomePage</a>
             <a href="registration.php">inscription</a>
-            <a href="connection.php">connectiion</a>
+            <a href="connection.php">connection</a>
         </nav>
     </header>
 <body>
@@ -26,9 +26,8 @@ if (!isset($_SESSION['token_article_add']) || empty($_SESSION['token_article_add
     <label for="pseudo">Pseudo</label>
     <input type="text" name="pseudo" id="pseudo">
     <br>
-    <br>
     <label for="password">Password</label>
-    <inpute name="password" id="password"></input>
+    <input type="text" name="password" id="password">
     <label for="biography">Biography</label>
     <textarea name="biography" id="biography"></textarea>
     <br>
