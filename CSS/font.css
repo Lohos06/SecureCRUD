@@ -1,20 +1,19 @@
 @font-face {
     font-family: "title";
-    src: url("/assets/font/MerriweatherVariableFont.ttf") format("truetype");
-    font-weight: 100 900;
+    src: url("/assets/font/MerriweatherVariableFont.woff2") format("woff2");
     font-style: normal;
 }
 
 @font-face {
     font-family: "text";
-    src: url("/assets/font/PlaywriteNZBVariableFont.ttf") format("truetype");
-    font-weight: 100 900;
+    src: url("/assets/font/PlaywriteNZBVariableFont.woff2") format("woff2");
     font-style: normal;
 }
 
 h1, h2, h3 {
     color: var(--textPrimary);
     font-family: "title";
+    font-weight: 700;
 }
 
 h1 {
@@ -30,6 +29,7 @@ h3 {
 p, a {
     color: var(--textSecondary);
     font-family: "text";
+    font-weight: 500;
 }
 
 p{

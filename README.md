@@ -28,6 +28,9 @@ Attaques CSRF :
 - tokens CSRF (correspondance site/session et POST) pour eviter les manipulations par outils externes
 - attribut SameSite
 
+Bonne Pratique :
+- hashage du mot de passe (ByCript)
+
 ## Securités non mise en place :
 
 attaques DDoS : 
