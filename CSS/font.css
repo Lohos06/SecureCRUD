@@ -1,9 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playwrite+NZ+Basic:wght@100..400&display=swap');
+@font-face {
+    font-family: "title";
+    src: url("/assets/font/MerriweatherVariableFont.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "text";
+    src: url("/assets/font/PlaywriteNZBVariableFont.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+}
 
 h1, h2, h3 {
     color: var(--textPrimary);
-    font-family: "Merriweather", serif;
+    font-family: "title";
 }
 
 h1 {
@@ -18,7 +29,7 @@ h3 {
 
 p, a {
     color: var(--textSecondary);
-    font-family: "Playwrite NZ Basic", cursive;
+    font-family: "text";
 }
 
 p{
