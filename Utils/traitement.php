@@ -3,12 +3,16 @@
 session_start();
 
 /* verif token*/
-
-if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token_article_add']) {
+if (
+    !isset($_POST['token']) ||
+    !isset($_SESSION['token_form_add']) ||
+    !hash_equals($_SESSION['token_form_add'], $_POST['token'])
+) {
     die('Erreur : Token invalide');
 }
 
-unset($_SESSION['token_article_add']);
+
+unset($_SESSION['token_form_add']);
 
 
 /* validation champs*/
@@ -49,7 +53,7 @@ try {
     $pdo = new PDO(
         'mysql:host=localhost;dbname=secureuser;charset=utf8',
         'root',
-        'root'
+        ''
     );
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
@@ -60,7 +64,7 @@ try {
 /* insertion bdd*/
 
 $insert = $pdo->prepare(
-    'INSERT INTO article (pseudo, password, biography)
+    'INSERT INTO users (pseudo, password, biography)
      VALUES (:pseudo, :password, :biography)'
 );
 

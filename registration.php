@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['token_article_add']) || empty($_SESSION['token_article_add'])) {
-  $_SESSION['token_article_add'] = bin2hex(random_bytes(32));
+if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
+  $_SESSION['token_form_add'] = bin2hex(random_bytes(32));
 }
 ?>
 <!DOCTYPE html>
@@ -21,8 +21,8 @@ if (!isset($_SESSION['token_article_add']) || empty($_SESSION['token_article_add
         </nav>
     </header>
 <body>
-  <form action="traitement.php" method="post">
-    <input type="hidden" name="token" value="<?= $_SESSION['token_article_add']; ?>">
+  <form action="Utils/traitement.php" method="post">
+    <input type="hidden" name="token" value="<?= $_SESSION['token_form_add']; ?>">
     <label for="pseudo">Pseudo</label>
     <input type="text" name="pseudo" id="pseudo">
     <br>
