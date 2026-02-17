@@ -1,0 +1,45 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 40%;
+    max-width: 90%;
+    justify-self: center;
+    padding: 2rem 0;
+}
+
+input, textarea {
+    background-color: var(--bgSecondary);
+    color: var(--textPrimary);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+textarea {
+    min-height: 20vh;
+}
+
+input:focus, textarea:focus{
+    background-color: var(--bgPrimary);
+    color: var(--accent);
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+
+    padding: 1rem;
+    width: 50%;
+
+    background-color: var(--bgPrimary);
+    color: var(--textPrimary);
+    border-radius: 0.5rem;
+}
+
+.submit:hover, .submit:focus {
+    background-color: var(--accent);
+    color: var(--textTertiary);
+}
