@@ -3,11 +3,7 @@
 require_once "./Utils/safeHeaders.php";
 require_once "./Utils/sessionStart.php";
 
-$pdo = new PDO(
-    'mysql:host=localhost;dbname=secureuser;charset=utf8',
-    'root',
-    ''
-);
+require_once "./Utils/BDDAdmin.php";
 
 ?>
 

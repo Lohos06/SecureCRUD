@@ -1,6 +1,7 @@
 <?php
 
 require_once "sessionStart.php";
+require_once "BDDAdmin.php";
 
 /* verif token*/
 if (
@@ -44,20 +45,6 @@ if (password_verify($plainPassword, $hashedPassword)) {
     echo '<p>Les deux mots de passe correspondent</p>';
 } else {
     echo '<p>Les deux mots de passe ne correspondent pas</p>';
-}
-
-
-/* connexion bdd */
-
-try {
-    $pdo = new PDO(
-        'mysql:host=localhost;dbname=secureuser;charset=utf8',
-        'root',
-        ''
-    );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die('Erreur BDD : ' . $e->getMessage());
 }
 
 
