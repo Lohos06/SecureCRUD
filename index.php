@@ -6,8 +6,6 @@ require_once "./Utils/sessionStart.php";
 require_once "./Utils/loadEnv.php";
 require_once "./Utils/BDDAdmin.php";
 
-// echo $_ENV['DB_Admin'];
-
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +63,7 @@ require_once "./Utils/BDDAdmin.php";
                                     <td>" . $user["pseudo"] . "</td>
                                     <td>" . $user["password"] . "</td>
                                     <td>" . $user["biography"] . "</td>
-                                    <td>" . $user["id"] . "</td>
+                                    <td>" . $user["role"] . "</td>
                                 </tr>
                             ";
                         }

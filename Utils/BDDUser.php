@@ -2,8 +2,8 @@
 
 $DB_HOST = "localhost";
 $DB_NAME = "secureuser";
-$DB_USER = "Admin";
-$DB_PSW = $_ENV['DB_ADMIN'];
+$DB_USER = "User";
+$DB_PSW = $_ENV['DB_USER'];
 
 try {
     $pdo = new PDO(
