@@ -7,7 +7,7 @@ header {
     padding: 2rem;
     gap: 2rem;
 
-    background-color: var(--bgPrimary);
+    background-color: var(--bgSecondary);
 }
 
 nav {

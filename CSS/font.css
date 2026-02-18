@@ -26,7 +26,7 @@ h3 {
     font-size: 1.5rem;
 }
 
-p, a {
+p, a, label, .submit {
     color: var(--textSecondary);
     font-family: "text";
     font-weight: 500;
