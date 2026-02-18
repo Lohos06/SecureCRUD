@@ -3,7 +3,7 @@
 require_once "./Utils/sessionStart.php";
 
 if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
-  $_SESSION['token_form_add'] = bin2hex(random_bytes(32));
+    $_SESSION['token_form_add'] = bin2hex(random_bytes(32));
 }
 ?>
 
@@ -13,47 +13,107 @@ if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/CSS/destyle.css" >
-    <link rel="stylesheet" href="/CSS/variables.css" >
-    <link rel="stylesheet" href="/CSS/font.css" >
-    <link rel="stylesheet" href="/CSS/header.css" >
-    <link rel="stylesheet" href="/CSS/section.css" >
-    <link rel="stylesheet" href="/CSS/footer.css" >
+    <link rel="stylesheet" href="/CSS/destyle.css">
+    <link rel="stylesheet" href="/CSS/variables.css">
+    <link rel="stylesheet" href="/CSS/font.css">
+    <link rel="stylesheet" href="/CSS/header.css">
+    <link rel="stylesheet" href="/CSS/section.css">
+    <link rel="stylesheet" href="/CSS/footer.css">
+    <link rel="stylesheet" href="/CSS/form.css">
 
-    <link rel="stylesheet" href="/CSS/form.css" >
-
-    <title>HomePage</title>
-    <meta name="description" content="A page to see what you are meant to">
+    <title>Registration</title>
 </head>
+
 <body>
-    <header>
-        <h1>Secure User</h1>
-        <nav>
-            <a href="/index.php">HomePage</a>
-            <a href="/registration.php">registration</a>
-            <a href="/connection.php">connection</a>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <form action="Utils/traitement.php" method="post">
-                <input type="hidden" name="token" value="<?= $_SESSION['token_form_add']; ?>">
-                <label for="pseudo">Pseudo (needed)</label>
-                <input type="text" name="pseudo" id="pseudo" required>
-                <label for="password">Password (needed)</label>
-                <input type="text" name="password" id="password" required>
-                <label for="biography">Biography</label>
-                <textarea name="biography" id="biography"></textarea>
-                <button type="submit" class="submit">S'Inscrire</button>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <p>Contact : Admin@gmail.com</p>
-        <div class="authors">
-            <h3>developpers :</h3>
-            <p>Yasminemfth</p>
-            <p>Lohos</p>
-        </div>
-    </footer>
+
+<header>
+    <h1>Secure User</h1>
+    <nav>
+        <a href="/index.php">HomePage</a>
+        <a href="/registration.php">Registration</a>
+        <a href="/connection.php">Connection</a>
+    </nav>
+</header>
+
+<main>
+<section>
+
+    <!-- Message PHP classique -->
+    <?php
+    if (isset($_SESSION['error'])) {
+        echo '<p style="color:red;">' . $_SESSION['error'] . '</p>';
+        unset($_SESSION['error']);
+    }
+    ?>
+
+    <!-- Message AJAX -->
+    <div id="messageBox"></div>
+
+    <form id="registerForm" method="post">
+
+        <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['token_form_add']); ?>">
+
+        <label for="pseudo">Pseudo (needed)</label>
+        <input type="text" name="pseudo" id="pseudo" required>
+
+        <label for="password">Password (needed)</label>
+        <input type="text" name="password" id="password" required>
+
+        <label for="biography">Biography</label>
+        <textarea name="biography" id="biography" required></textarea>
+
+        <button type="submit" class="submit">S'inscrire</button>
+
+    </form>
+
+</section>
+</main>
+
+<footer>
+    <p>Contact : Admin@gmail.com</p>
+    <div class="authors">
+        <h3>Developers :</h3>
+        <p>Yasminemfth</p>
+        <p>Lohos</p>
+    </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("registerForm");
+    const messageBox = document.getElementById("messageBox");
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch("Utils/traitement.php", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            messageBox.innerText = data.message;
+
+            if (data.status === "error") {
+                messageBox.style.color = "red";
+            } else {
+                messageBox.style.color = "green";
+                form.reset();
+            }
+
+        })
+
+    });
+
+});
+</script>
+
 </body>
+</html>

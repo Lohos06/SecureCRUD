@@ -3,85 +3,90 @@
 require_once "sessionStart.php";
 require_once "BDDAdmin.php";
 
-/* verif token*/
+header('Content-Type: application/json');
+
+$isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+          strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+
+
+/* verif token */
 
 if (
     !isset($_POST['token']) ||
     !isset($_SESSION['token_form_add']) ||
     !hash_equals($_SESSION['token_form_add'], $_POST['token'])
 ) {
-    die('Erreur : Token invalide');
+    echo json_encode(['status' => 'error', 'message' => 'Token invalide.']);
+    exit();
 }
 
 unset($_SESSION['token_form_add']);
 
 
-/*validation champs*/
+/* Validation champs */
 
-if (empty($_POST['pseudo'])) {
-    die('Le pseudo est obligatoire');
-}
-
-if (empty($_POST['password'])) {
-    die('Le mot de passe est obligatoire');
-}
-
-if (empty($_POST['biography'])) {
-    die('La biographie est obligatoire');
+if (empty($_POST['pseudo']) || empty($_POST['password']) || empty($_POST['biography'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Tous les champs sont obligatoires.']);
+    exit();
 }
 
 $pseudo = htmlspecialchars(trim($_POST['pseudo']));
 $plainPassword = $_POST['password'];
 $biography = htmlspecialchars(trim($_POST['biography']));
 
-/* Validation mp */
-$password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/';
 
-if (!preg_match($password_pattern, $plainPassword)) {
-    die('Le mot de passe doit contenir au moins 8 caractères avec : 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.');
-}
-
-
-/* connexion bdd*/
-
-try {
-    $pdo = new PDO(
-        'mysql:host=localhost;dbname=secureuser;charset=utf8',
-        'root',
-        ''
-    );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die('Erreur BDD : ' . $e->getMessage());
-}
-
-
-/* verif pseudo*/
+/* verif pseudo */
 
 $check = $pdo->prepare("SELECT id FROM users WHERE pseudo = ?");
 $check->execute([$pseudo]);
 
 if ($check->rowCount() > 0) {
-    die("Pseudo déjà utilisé.");
+    echo json_encode(['status' => 'error', 'message' => 'Pseudo déjà utilisé.']);
+    exit();
 }
 
 
-/* hash mp*/
+/* validation mp complexe */
+
+$password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/';
+
+if (!preg_match($password_pattern, $plainPassword)) {
+    echo json_encode(['status' => 'error', 'message' => 'Mot de passe trop faible.']);
+    exit();
+}
+
+
+/* hash mp */
 
 $hashedPassword = password_hash($plainPassword, PASSWORD_BCRYPT);
 
 
-/* insertion bdd*/
+/* Insertion BDD */
 
-$insert = $pdo->prepare(
-    'INSERT INTO users (pseudo, password, biography)
-     VALUES (:pseudo, :password, :biography)'
-);
+try {
 
-$insert->execute([
-    'pseudo' => $pseudo,
-    'password' => $hashedPassword,
-    'biography' => $biography
-]);
+    $insert = $pdo->prepare(
+        'INSERT INTO users (pseudo, password, biography)
+         VALUES (:pseudo, :password, :biography)'
+    );
 
-echo 'Inscription faite avec succès';
+    $insert->execute([
+        'pseudo' => $pseudo,
+        'password' => $hashedPassword,
+        'biography' => $biography
+    ]);
+
+} catch (PDOException $e) {
+
+    if ($e->getCode() == 23000) {
+        echo json_encode(['status' => 'error', 'message' => 'Pseudo déjà utilisé.']);
+        exit();
+    }
+
+    echo json_encode(['status' => 'error', 'message' => 'Erreur serveur.']);
+    exit();
+}
+
+
+echo json_encode(['status' => 'success', 'message' => 'Inscription réussie !']);
+exit();
