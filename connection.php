@@ -17,7 +17,9 @@ if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
     <link rel="stylesheet" href="/CSS/variables.css" >
     <link rel="stylesheet" href="/CSS/font.css" >
     <link rel="stylesheet" href="/CSS/header.css" >
+    <link rel="stylesheet" href="/CSS/section.css" >
     <link rel="stylesheet" href="/CSS/footer.css" >
+    
     <link rel="stylesheet" href="/CSS/form.css" >
 
     <title>Connection</title>
@@ -33,13 +35,15 @@ if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
         </nav>
     </header>
     <main>
-      <form action="Utils/traitement.php" method="post">
-        <input type="hidden" name="token" value="<?= $_SESSION['token_form_add']; ?>">
-        <label for="pseudo">Pseudo (needed)</label>
-        <input type="text" name="pseudo" id="pseudo" required>
-        <label for="password">Password (needed)</label>
-        <input type="text" name="password" id="password" required>
-      </form>
+        <section>
+            <form action="Utils/traitement.php" method="post">
+                <input type="hidden" name="token" value="<?= $_SESSION['token_form_add']; ?>">
+                <label for="pseudo">Pseudo (needed)</label>
+                <input type="text" name="pseudo" id="pseudo" required>
+                <label for="password">Password (needed)</label>
+                <input type="text" name="password" id="password" required>
+            </form>
+        </section>
     </main>
     <footer>
         <p>Contact : Admin@gmail.com</p>
