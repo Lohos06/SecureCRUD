@@ -5,9 +5,6 @@ require_once "BDDAdmin.php";
 
 header('Content-Type: application/json');
 
-$isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-          strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
-
 
 /* verif token */
 
@@ -16,17 +13,21 @@ if (
     !isset($_SESSION['token_form_add']) ||
     !hash_equals($_SESSION['token_form_add'], $_POST['token'])
 ) {
-    echo json_encode(['status' => 'error', 'message' => 'Token invalide.']);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Token invalide.'
+    ]);
     exit();
 }
 
-unset($_SESSION['token_form_add']);
 
-
-/* Validation champs */
+/* Validation champs   */
 
 if (empty($_POST['pseudo']) || empty($_POST['password']) || empty($_POST['biography'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Tous les champs sont obligatoires.']);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Tous les champs sont obligatoires.'
+    ]);
     exit();
 }
 
@@ -35,13 +36,16 @@ $plainPassword = $_POST['password'];
 $biography = htmlspecialchars(trim($_POST['biography']));
 
 
-/* verif pseudo */
+/* verif pseudo en 1er*/
 
 $check = $pdo->prepare("SELECT id FROM users WHERE pseudo = ?");
 $check->execute([$pseudo]);
 
 if ($check->rowCount() > 0) {
-    echo json_encode(['status' => 'error', 'message' => 'Pseudo déjà utilisé.']);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Pseudo déjà utilisé.'
+    ]);
     exit();
 }
 
@@ -51,7 +55,10 @@ if ($check->rowCount() > 0) {
 $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/';
 
 if (!preg_match($password_pattern, $plainPassword)) {
-    echo json_encode(['status' => 'error', 'message' => 'Mot de passe trop faible.']);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Mot de passe trop faible.'
+    ]);
     exit();
 }
 
@@ -61,7 +68,7 @@ if (!preg_match($password_pattern, $plainPassword)) {
 $hashedPassword = password_hash($plainPassword, PASSWORD_BCRYPT);
 
 
-/* Insertion BDD */
+/* Insertion BDD*/
 
 try {
 
@@ -79,14 +86,29 @@ try {
 } catch (PDOException $e) {
 
     if ($e->getCode() == 23000) {
-        echo json_encode(['status' => 'error', 'message' => 'Pseudo déjà utilisé.']);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Pseudo déjà utilisé.'
+        ]);
         exit();
     }
 
-    echo json_encode(['status' => 'error', 'message' => 'Erreur serveur.']);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Erreur serveur.'
+    ]);
     exit();
 }
 
 
-echo json_encode(['status' => 'success', 'message' => 'Inscription réussie !']);
+/* Regénération token sécurisé */
+$_SESSION['token_form_add'] = bin2hex(random_bytes(32));
+
+
+echo json_encode([
+    'status' => 'success',
+    'message' => 'Inscription réussie !',
+    'newToken' => $_SESSION['token_form_add']
+]);
+
 exit();

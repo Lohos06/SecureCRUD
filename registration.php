@@ -38,30 +38,19 @@ if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
 <main>
 <section>
 
-    <!-- Message PHP classique -->
-    <?php
-    if (isset($_SESSION['error'])) {
-        echo '<p style="color:red;">' . $_SESSION['error'] . '</p>';
-        unset($_SESSION['error']);
-    }
-    ?>
-
-    <!-- Message AJAX -->
+    <!-- Message ajax -->
     <div id="messageBox"></div>
 
     <form id="registerForm" method="post">
 
-        <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['token_form_add']); ?>">
-
+        <input type="hidden" name="token"
+               value="<?= htmlspecialchars($_SESSION['token_form_add']); ?>">
         <label for="pseudo">Pseudo (needed)</label>
         <input type="text" name="pseudo" id="pseudo" required>
-
         <label for="password">Password (needed)</label>
         <input type="text" name="password" id="password" required>
-
         <label for="biography">Biography</label>
         <textarea name="biography" id="biography" required></textarea>
-
         <button type="submit" class="submit">S'inscrire</button>
 
     </form>
@@ -72,7 +61,7 @@ if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
 <footer>
     <p>Contact : Admin@gmail.com</p>
     <div class="authors">
-        <h3>Developers :</h3>
+        <h3>Developpers :</h3>
         <p>Yasminemfth</p>
         <p>Lohos</p>
     </div>
@@ -84,8 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("registerForm");
     const messageBox = document.getElementById("messageBox");
 
-    form.addEventListener("submit", function(e) {
-        e.preventDefault();
+    form.addEventListener("submit", function (e) {
+
+        e.preventDefault(); // pas refresh
 
         const formData = new FormData(form);
 
@@ -106,9 +96,18 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 messageBox.style.color = "green";
                 form.reset();
+
+                // maj token
+                if (data.newToken) {
+                    form.querySelector("input[name='token']").value = data.newToken;
+                }
             }
 
         })
+        .catch(() => {
+            messageBox.innerText = "Erreur serveur.";
+            messageBox.style.color = "red";
+        });
 
     });
 
