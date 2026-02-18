@@ -3,7 +3,6 @@
 require_once "./Utils/safeHeaders.php";
 require_once "./Utils/sessionStart.php";
 
-require_once "./Utils/loadEnv.php";
 require_once "./Utils/BDDAdmin.php";
 
 ?>
