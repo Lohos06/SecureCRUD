@@ -9,15 +9,6 @@ $pdo = new PDO(
     ''
 );
 
-$users = $pdo->prepare('SELECT * FROM users');
-$users->execute([]);
-
-foreach ($users as $user) {
-    if(isset($user)) {
-        var_dump($user);
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +21,10 @@ foreach ($users as $user) {
     <link rel="stylesheet" href="/CSS/variables.css" >
     <link rel="stylesheet" href="/CSS/font.css" >
     <link rel="stylesheet" href="/CSS/header.css" >
+    <link rel="stylesheet" href="/CSS/section.css" >
     <link rel="stylesheet" href="/CSS/footer.css" >
+
+    <link rel="stylesheet" href="/CSS/table.css" >
 
     <title>HomePage</title>
     <meta name="description" content="A page to see what you are meant to">
@@ -46,7 +40,41 @@ foreach ($users as $user) {
         </nav>
     </header>
     <main>
-
+        <section>
+            <table>
+                <caption class="TableTitle">
+                    Table of Users
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">biography</th>
+                        <th scope="col">role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $users = $pdo->prepare('SELECT * FROM users');
+                    $users->execute([]); 
+                    foreach ($users as $user) {
+                        if(isset($user)) {
+                            echo "
+                                <tr>
+                                    <th scope='row'>" . $user["id"] . "</th>
+                                    <td>" . $user["pseudo"] . "</td>
+                                    <td>" . $user["password"] . "</td>
+                                    <td>" . $user["biography"] . "</td>
+                                    <td>" . $user["id"] . "</td>
+                                </tr>
+                            ";
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </section>
     </main>
     <footer>
         <p>Contact : Admin@gmail.com</p>

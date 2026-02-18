@@ -4,7 +4,7 @@
 
   --textPrimary: #E5E7EB;     
   --textSecondary: #94A3B8;
-  --textTertiary: var(--bgPrimary)
+  --textTertiary: var(--bgPrimary);
 
   --accent: #22D3EE;
 }

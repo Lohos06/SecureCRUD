@@ -25,6 +25,10 @@ input:focus, textarea:focus{
     color: var(--accent);
 }
 
+label {
+    color: var(--textPrimary);
+}
+
 .submit {
     display: flex;
     justify-content: center;
@@ -34,9 +38,10 @@ input:focus, textarea:focus{
     padding: 1rem;
     width: 50%;
 
-    background-color: var(--bgPrimary);
+    background-color: var(--bgSecondary);
     color: var(--textPrimary);
     border-radius: 0.5rem;
+    font-size: 1.2rem;
 }
 
 .submit:hover, .submit:focus {
