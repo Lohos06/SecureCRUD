@@ -1,5 +1,7 @@
 <?php 
 
+require_once "./loadEnv.php";
+
 $DB_HOST = "localhost";
 $DB_NAME = "secureuser";
 $DB_USER = "Admin";
@@ -11,7 +13,7 @@ try {
         dbname=' . $DB_NAME . ';
         charset=utf8',
         $DB_USER,
-        $DB_PSW
+        $DB_PSW 
     );
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {

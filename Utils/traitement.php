@@ -1,110 +1,87 @@
 <?php
+ob_start();
 
 require_once "sessionStart.php";
 require_once "BDDAdmin.php";
 
 header('Content-Type: application/json');
 
+$errors = [];
+
+/*partie inscription*/
 
 /* verif token */
-
 if (
     !isset($_POST['token']) ||
     !isset($_SESSION['token_form_add']) ||
     !hash_equals($_SESSION['token_form_add'], $_POST['token'])
 ) {
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Token invalide.'
-    ]);
-    exit();
+    $errors[] = "Token invalide.";
 }
 
+$pseudo = trim($_POST['pseudo'] ?? '');
+$plainPassword = $_POST['password'] ?? '';
+$biography = trim($_POST['biography'] ?? '');
 
-/* Validation champs   */
-
-if (empty($_POST['pseudo']) || empty($_POST['password']) || empty($_POST['biography'])) {
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Tous les champs sont obligatoires.'
-    ]);
-    exit();
+/* Validation champs */
+if (empty($pseudo)) {
+    $errors[] = "Pseudo obligatoire.";
 }
 
-$pseudo = htmlspecialchars(trim($_POST['pseudo']));
-$plainPassword = $_POST['password'];
-$biography = htmlspecialchars(trim($_POST['biography']));
-
-
-/* verif pseudo en 1er*/
-
-$check = $pdo->prepare("SELECT id FROM users WHERE pseudo = ?");
-$check->execute([$pseudo]);
-
-if ($check->rowCount() > 0) {
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Pseudo déjà utilisé.'
-    ]);
-    exit();
+if (empty($plainPassword)) {
+    $errors[] = "Mot de passe obligatoire.";
 }
 
+if (empty($biography)) {
+    $errors[] = "Biographie obligatoire.";
+}
 
-/* validation mp complexe */
+/* verif pseudo */
+if (!empty($pseudo)) {
+    $check = $pdo->prepare("SELECT id FROM users WHERE pseudo = ?");
+    $check->execute([$pseudo]);
 
+    if ($check->rowCount() > 0) {
+        $errors[] = "Pseudo déjà utilisé.";
+    }
+}
+
+/* validation mp */
 $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/';
 
-if (!preg_match($password_pattern, $plainPassword)) {
+if (!empty($plainPassword) && !preg_match($password_pattern, $plainPassword)) {
+    $errors[] = "Mot de passe trop faible.";
+}
+
+/* S'il y a des erreurs on renvoie les 2erreur */
+if (!empty($errors)) {
+    ob_clean();
     echo json_encode([
         'status' => 'error',
-        'message' => 'Mot de passe trop faible.'
+        'errors' => $errors
     ]);
     exit();
 }
-
 
 /* hash mp */
-
 $hashedPassword = password_hash($plainPassword, PASSWORD_BCRYPT);
 
+/* insertion */
+$insert = $pdo->prepare(
+    'INSERT INTO users (pseudo, password, biography)
+     VALUES (:pseudo, :password, :biography)'
+);
 
-/* Insertion BDD*/
+$insert->execute([
+    'pseudo' => htmlspecialchars($pseudo),
+    'password' => $hashedPassword,
+    'biography' => htmlspecialchars($biography)
+]);
 
-try {
-
-    $insert = $pdo->prepare(
-        'INSERT INTO users (pseudo, password, biography)
-         VALUES (:pseudo, :password, :biography)'
-    );
-
-    $insert->execute([
-        'pseudo' => $pseudo,
-        'password' => $hashedPassword,
-        'biography' => $biography
-    ]);
-
-} catch (PDOException $e) {
-
-    if ($e->getCode() == 23000) {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Pseudo déjà utilisé.'
-        ]);
-        exit();
-    }
-
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Erreur serveur.'
-    ]);
-    exit();
-}
-
-
-/* Regénération token sécurisé */
+/* regeneration token */
 $_SESSION['token_form_add'] = bin2hex(random_bytes(32));
 
-
+ob_clean();
 echo json_encode([
     'status' => 'success',
     'message' => 'Inscription réussie !',
@@ -112,3 +89,6 @@ echo json_encode([
 ]);
 
 exit();
+
+
+/*partie conection*/

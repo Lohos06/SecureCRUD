@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     form.addEventListener("submit", function (e) {
 
-        e.preventDefault(); // pas refresh
+        e.preventDefault(); // pas de refresh
 
         const formData = new FormData(form);
 
@@ -89,15 +89,30 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
 
-            messageBox.innerText = data.message;
+            messageBox.innerText = ""; /*tab d'error*/
 
             if (data.status === "error") {
+
+                let messages = "";
+
+                if (data.errors) {
+                    for (let field in data.errors) {
+                        messages += data.errors[field] + "\n";
+                    }
+                } else if (data.message) {
+                    messages = data.message;
+                }
+
+                messageBox.innerText = messages;
                 messageBox.style.color = "red";
-            } else {
+
+            } else if (data.status === "success") {
+
+                messageBox.innerText = data.message;
                 messageBox.style.color = "green";
                 form.reset();
 
-                // maj token
+                // mise à jour token
                 if (data.newToken) {
                     form.querySelector("input[name='token']").value = data.newToken;
                 }
@@ -113,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+
 
 </body>
 </html>

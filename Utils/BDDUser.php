@@ -1,4 +1,5 @@
 <?php 
+require_once "./loadEnv.php";
 
 $DB_HOST = "localhost";
 $DB_NAME = "secureuser";
