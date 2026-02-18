@@ -7,8 +7,9 @@ CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     pseudo VARCHAR(255),
     password VARCHAR(255),
+    role VARCHAR(10),
     biography TEXT
 );
 
--- dsupprimer la BDD
+-- supprimer la BDD
 DROP DATABASE SecureUser;
