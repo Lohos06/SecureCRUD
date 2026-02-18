@@ -35,3 +35,8 @@ Bonne Pratique :
 
 attaques DDoS : 
 - Hebergeur avec par-feu
+
+## fichiers necessaires au bon fonctionnement :
+
+- .env
+- /sqlRequestInitialisation/sqlUsersCreation.sql
