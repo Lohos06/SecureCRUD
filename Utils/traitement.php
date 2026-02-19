@@ -50,7 +50,7 @@ if (!empty($pseudo)) {
 $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/';
 
 if (!empty($plainPassword) && !preg_match($password_pattern, $plainPassword)) {
-    $errors[] = "Mot de passe trop faible.";
+    $errors[] = "Mot de passe trop faible.Veuillez fire en osrte qu'il y'a 8 caractere dont une majuscule,minuscule charactere speciaux et chiffre";
 }
 
 /* S'il y a des erreurs on renvoie les 2erreur */
@@ -90,5 +90,3 @@ echo json_encode([
 
 exit();
 
-
-/*partie conection*/
