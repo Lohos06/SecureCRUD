@@ -7,20 +7,6 @@ if(!isset($_SESSION['user_id'])) {
     header("Location: connection.php");
 }
 
-require_once "./Utils/BDDAdmin.php";
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['biography'])) {
-
-    $biography = trim($_POST['biography']);
-
-    if (!empty($biography)) {
-
-        $update = $pdo->prepare("UPDATE users SET biography = ? WHERE id = ?");
-        $update->execute([$biography, $_SESSION['user_id']]);
-
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -55,65 +41,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['biography'])) {
     </header>
     <main>
         <section>
-                <?php
-                    if(isset($_SESSION['user_id'])) {
-                        if($_SESSION['role'] === "admin") {
-                            require_once "./Utils/BDDAdmin.php";
-                            $users = $pdo->prepare('SELECT * FROM users');
-                            $users->execute([]); 
-                            echo "<table>
-                                    <caption class='TableTitle'>
-                                        Table of Users
-                                    </caption>
-                                    <thead>
-                                        <tr>
-                                            <th scope='col'>Id</th>
-                                            <th scope='col'>Pseudo</th>
-                                            <th scope='col'>biography</th>
-                                            <th scope='col'>role</th>
-                                            <th scope='col'>supprimer</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>";
-                            foreach ($users as $user) {
-                                if(isset($user)) {
-                                    echo "
-                                        <tr>
-                                            <th scope='row'>" . $user["id"] . "</th>
-                                            <td>" . $user["pseudo"] . "</td>
-                                            <td>" . $user["biography"] . "</td>
-                                            <td>" . $user["role"] . "</td>
-                                            <td><form action='Utils/DeleteUser.php' method='POST'>
-                                                    <input type='hidden' name='id' value=" . $user['id'] . ">
-                                                    <input type='submit' value='Supprimer'>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    ";
-                                }
-                            }
-                            echo "</tbody>
-                                </table>";
-                        } else {
-                             $stmt = $pdo->prepare("SELECT biography FROM users WHERE id = ?");
-                                $stmt->execute([$_SESSION['user_id']]);
-                                $user = $stmt->fetch();
-
-                                echo "<h2>Bienvenue " . htmlspecialchars($_SESSION['pseudo']) . " 🐱</h2>";
-                                echo "<p><strong>Description :</strong> " . htmlspecialchars($user['biography']) . "</p>";
-                                ?>
-
-                                <form method="POST">
-                                    <label for="biography">Modifier votre biographie :</label><br>
-                                    <textarea name="biography" id="biography" required><?= htmlspecialchars($user['biography']) ?></textarea><br>
-                                     <button type="submit" class="submit">Mettre à jour</button>
-                                </form>
-
-                            <?php
-                            }}
-                            ?>
-
- 
+            <?php
+                if(isset($_SESSION['user_id'])) {
+                    if($_SESSION['role'] === "admin") 
+                    { require_once "./Utils/adminPanel.php"; } 
+                    else 
+                    { require_once "./Utils/profil.php"; }}
+            ?>
         </section>
     </main>
     <footer>
