@@ -2,6 +2,10 @@
 
 require_once "./Utils/sessionStart.php";
 
+if(isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+}
+
 if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
     $_SESSION['token_form_add'] = bin2hex(random_bytes(32));
 }
@@ -32,6 +36,7 @@ if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
         <a href="/index.php">HomePage</a>
         <a href="/registration.php">Registration</a>
         <a href="/connection.php">Connection</a>
+        <a href="/Utils/sessionDestory.php">Deconnexion</a>
     </nav>
 </header>
 

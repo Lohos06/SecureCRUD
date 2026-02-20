@@ -3,6 +3,10 @@
 require_once "./Utils/safeHeaders.php";
 require_once "./Utils/sessionStart.php";
 
+if(!isset($_SESSION['user_id'])) {
+    header("Location: connection.php");
+}
+
 require_once "./Utils/BDDAdmin.php";
 
 ?>
@@ -31,45 +35,54 @@ require_once "./Utils/BDDAdmin.php";
         <h1>Secure User</h1>
         <nav>
             <a href="/index.php">HomePage</a>
-            <a href="/registration.php">registration</a>
-            <a href="/connection.php">connection</a>
+            <a href="/registration.php">Registration</a>
+            <a href="/connection.php">Connection</a>
+            <a href="/Utils/sessionDestory.php">Deconnexion</a>
         </nav>
     </header>
     <main>
         <section>
-            <table>
-                <caption class="TableTitle">
-                    Table of Users
-                </caption>
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Pseudo</th>
-                        <th scope="col">Password</th>
-                        <th scope="col">biography</th>
-                        <th scope="col">role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $users = $pdo->prepare('SELECT * FROM users');
-                    $users->execute([]); 
-                    foreach ($users as $user) {
-                        if(isset($user)) {
-                            echo "
-                                <tr>
-                                    <th scope='row'>" . $user["id"] . "</th>
-                                    <td>" . $user["pseudo"] . "</td>
-                                    <td>" . $user["password"] . "</td>
-                                    <td>" . $user["biography"] . "</td>
-                                    <td>" . $user["role"] . "</td>
-                                </tr>
-                            ";
+                <?php
+                    if(isset($_SESSION['user_id'])) {
+                        if($_SESSION['role'] === "admin") {
+                            $users = $pdo->prepare('SELECT * FROM users');
+                            $users->execute([]); 
+                            echo "<table>
+                                    <caption class='TableTitle'>
+                                        Table of Users
+                                    </caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope='col'>Id</th>
+                                            <th scope='col'>Pseudo</th>
+                                            <th scope='col'>Password</th>
+                                            <th scope='col'>biography</th>
+                                            <th scope='col'>role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>";
+                            foreach ($users as $user) {
+                                if(isset($user)) {
+                                    echo "
+                                        <tr>
+                                            <th scope='row'>" . $user["id"] . "</th>
+                                            <td>" . $user["pseudo"] . "</td>
+                                            <td>" . $user["password"] . "</td>
+                                            <td>" . $user["biography"] . "</td>
+                                            <td>" . $user["role"] . "</td>
+                                        </tr>
+                                    ";
+                                }
+                            }
+                            echo "</tbody>
+                                </table>";
+                        } else {
+                            echo ("<h2>Bienvenue " . $_SESSION['pseudo'] . "🐱</h2>");
                         }
                     }
+
                     ?>
-                </tbody>
-            </table>
+
         </section>
     </main>
     <footer>

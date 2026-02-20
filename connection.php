@@ -2,10 +2,15 @@
 
 require_once "./Utils/sessionStart.php";
 
+if(isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+}
+
 /* toekn connexion */
 if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion_add'])) {
     $_SESSION['token_connexion_add'] = bin2hex(random_bytes(32));
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -34,19 +39,13 @@ if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion
         <a href="/index.php">HomePage</a>
         <a href="/registration.php">Registration</a>
         <a href="/connection.php">Connection</a>
+        <a href="/Utils/sessionDestory.php">Deconnexion</a>
     </nav>
 </header>
 
 <main>
 <section>
-
-<?php if (isset($_SESSION['pseudo'])): ?>
-    <h2>Bienvenue <?= htmlspecialchars($_SESSION['pseudo']) ?> 🐱</h2> <!--recup le pseudo pour l'afficher -->
-    <p>Vous êtes connecté.</p>
-<?php else: ?>
-
     <h2>Connexion</h2>
-
     <form id="loginForm" method="post"> <!-- a la place de faire le link avec traitement conenction via l'url on fait avec le js ci dessous-->
         <input type="hidden" name="token" value="<?= $_SESSION['token_connexion_add']; ?>">
 
@@ -58,11 +57,7 @@ if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion
 
          <button type="submit" class="submit">Se connecter</button>
     </form>
-
     <div id="responseMessage"></div>
-
-<?php endif; ?>
-
 </section>
 </main>
 
