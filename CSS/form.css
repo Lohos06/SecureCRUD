@@ -6,7 +6,6 @@ form {
     min-width: 40%;
     max-width: 90%;
     justify-self: center;
-    padding: 2rem 0;
 }
 
 input, textarea {
