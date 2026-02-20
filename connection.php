@@ -37,15 +37,18 @@ if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion
     <h1>Secure User</h1>
     <nav>
         <a href="/index.php">HomePage</a>
-        <a href="/registration.php">Registration</a>
-        <a href="/connection.php">Connection</a>
-        <a href="/Utils/sessionDestory.php">Deconnexion</a>
+        <a href="/registration.php">SignUp</a>
+        <a href="/connection.php">Login</a>
+        <a href="/Utils/sessionDestory.php">Log out</a>
     </nav>
 </header>
 
 <main>
 <section>
-    <h2>Connexion</h2>
+    
+    <div id="responseMessage"></div>
+    <h2>Login</h2>
+    
     <form id="loginForm" method="post"> <!-- a la place de faire le link avec traitement conenction via l'url on fait avec le js ci dessous-->
         <input type="hidden" name="token" value="<?= $_SESSION['token_connexion_add']; ?>">
 
@@ -55,9 +58,8 @@ if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion
         <label for="password">Password(needed)</label>
         <input type="password" name="password" id="password" required>
 
-         <button type="submit" class="submit">Se connecter</button>
+         <button type="submit" class="submit">Login</button>
     </form>
-    <div id="responseMessage"></div>
 </section>
 </main>
 

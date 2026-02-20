@@ -34,9 +34,9 @@ if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
     <h1>Secure User</h1>
     <nav>
         <a href="/index.php">HomePage</a>
-        <a href="/registration.php">Registration</a>
-        <a href="/connection.php">Connection</a>
-        <a href="/Utils/sessionDestory.php">Deconnexion</a>
+        <a href="/registration.php">SignUp</a>
+        <a href="/connection.php">Login</a>
+        <a href="/Utils/sessionDestory.php">Log out</a>
     </nav>
 </header>
 
@@ -56,7 +56,7 @@ if (!isset($_SESSION['token_form_add']) || empty($_SESSION['token_form_add'])) {
         <input type="text" name="password" id="password" required>
         <label for="biography">Biography</label>
         <textarea name="biography" id="biography" required></textarea>
-        <button type="submit" class="submit">S'inscrire</button>
+        <button type="submit" class="submit">SignUp</button>
 
     </form>
 

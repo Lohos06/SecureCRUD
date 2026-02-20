@@ -35,9 +35,9 @@ if(!isset($_SESSION['user_id'])) {
         <h1>Secure User</h1>
         <nav>
             <a href="/index.php">HomePage</a>
-            <a href="/registration.php">Registration</a>
-            <a href="/connection.php">Connection</a>
-            <a href="/Utils/sessionDestory.php">Deconnexion</a>
+            <a href="/registration.php">SignUp</a>
+            <a href="/connection.php">Login</a>
+            <a href="/Utils/sessionDestory.php">Log out</a>
         </nav>
     </header>
     <main>

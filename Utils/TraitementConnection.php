@@ -53,7 +53,7 @@ if (!$user || !password_verify($plainPassword, $user['password'])) {
     ob_clean();
     echo json_encode([
         'status' => 'error',
-        'errors' => ["Identifiants incorrects."]
+        'errors' => ["Pseudo ou Password incorrects."]
     ]);
     exit();
 }
