@@ -55,7 +55,6 @@ require_once "./Utils/BDDAdmin.php";
                                         <tr>
                                             <th scope='col'>Id</th>
                                             <th scope='col'>Pseudo</th>
-                                            <th scope='col'>Password</th>
                                             <th scope='col'>biography</th>
                                             <th scope='col'>role</th>
                                         </tr>
@@ -67,7 +66,6 @@ require_once "./Utils/BDDAdmin.php";
                                         <tr>
                                             <th scope='row'>" . $user["id"] . "</th>
                                             <td>" . $user["pseudo"] . "</td>
-                                            <td>" . $user["password"] . "</td>
                                             <td>" . $user["biography"] . "</td>
                                             <td>" . $user["role"] . "</td>
                                         </tr>
@@ -78,6 +76,7 @@ require_once "./Utils/BDDAdmin.php";
                                 </table>";
                         } else {
                             echo ("<h2>Bienvenue " . $_SESSION['pseudo'] . "🐱</h2>");
+                            echo ("<p> Description : " . $_SESSION['biography'] . "</p>");
                         }
                     }
 

@@ -43,7 +43,7 @@ if (!empty($errors)) {
 
 /* Recherche user */
 
-$stmt = $pdo->prepare("SELECT id, pseudo, role, password FROM users WHERE pseudo = ?");
+$stmt = $pdo->prepare("SELECT id, pseudo, role, biography, password FROM users WHERE pseudo = ?");
 $stmt->execute([$pseudo]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -62,6 +62,7 @@ if (!$user || !password_verify($plainPassword, $user['password'])) {
 $_SESSION['user_id'] = $user['id'];
 $_SESSION['pseudo'] = $user['pseudo'];
 $_SESSION['role'] = $user['role'];
+$_SESSION['biography'] = $user['biography'];
 
 /* régénération token */
 $_SESSION['token_connexion_add'] = bin2hex(random_bytes(32));
