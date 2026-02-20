@@ -42,26 +42,25 @@ require_once "./Utils/BDDAdmin.php";
     </header>
     <main>
         <section>
-            <table>
-                <caption class="TableTitle">
-                    Table of Users
-                </caption>
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Pseudo</th>
-                        <th scope="col">Password</th>
-                        <th scope="col">biography</th>
-                        <th scope="col">role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-
+                <?php
                     if(isset($_SESSION['user_id'])) {
                         if($_SESSION['role'] === "admin") {
                             $users = $pdo->prepare('SELECT * FROM users');
                             $users->execute([]); 
+                            echo "<table>
+                                    <caption class='TableTitle'>
+                                        Table of Users
+                                    </caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope='col'>Id</th>
+                                            <th scope='col'>Pseudo</th>
+                                            <th scope='col'>Password</th>
+                                            <th scope='col'>biography</th>
+                                            <th scope='col'>role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>";
                             foreach ($users as $user) {
                                 if(isset($user)) {
                                     echo "
@@ -75,14 +74,15 @@ require_once "./Utils/BDDAdmin.php";
                                     ";
                                 }
                             }
+                            echo "</tbody>
+                                </table>";
                         } else {
-                            echo ("Bienvenue " . $_SESSION['pseudo']);
+                            echo ("<h2>Bienvenue " . $_SESSION['pseudo'] . "🐱</h2>");
                         }
                     }
 
                     ?>
-                </tbody>
-            </table>
+
         </section>
     </main>
     <footer>
