@@ -37,15 +37,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 messageBox.innerText = messages;
                 messageBox.style.color = "red";
 
-            } if (data.status === "success") {
+            } else if (data.status === "success") {
 
                 messageBox.innerText = data.message;
                 messageBox.style.color = "green";
-
-                setTimeout(() => {
-                    window.location.href = data.redirect;
-                }, 1000);
-            
+                form.reset();
 
                 // mise à jour token
                 if (data.newToken) {
