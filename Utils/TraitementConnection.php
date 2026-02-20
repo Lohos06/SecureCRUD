@@ -43,7 +43,7 @@ if (!empty($errors)) {
 
 /* Recherche user */
 
-$stmt = $pdo->prepare("SELECT id, pseudo, password FROM users WHERE pseudo = ?");
+$stmt = $pdo->prepare("SELECT id, pseudo, role, password FROM users WHERE pseudo = ?");
 $stmt->execute([$pseudo]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
