@@ -7,6 +7,19 @@ if(!isset($_SESSION['user_id'])) {
     header("Location: connection.php");
 }
 
+require_once "./Utils/BDDAdmin.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['biography'])) {
+
+    $biography = trim($_POST['biography']);
+
+    if (!empty($biography)) {
+
+        $update = $pdo->prepare("UPDATE users SET biography = ? WHERE id = ?");
+        $update->execute([$biography, $_SESSION['user_id']]);
+
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +31,7 @@ if(!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/CSS/destyle.css" >
     <link rel="stylesheet" href="/CSS/variables.css" >
     <link rel="stylesheet" href="/CSS/font.css" >
+    <link rel="stylesheet" href="/CSS/form.css" >
     <link rel="stylesheet" href="/CSS/header.css" >
     <link rel="stylesheet" href="/CSS/section.css" >
     <link rel="stylesheet" href="/CSS/footer.css" >
@@ -80,13 +94,25 @@ if(!isset($_SESSION['user_id'])) {
                             echo "</tbody>
                                 </table>";
                         } else {
-                            echo ("<h2>Bienvenue " . $_SESSION['pseudo'] . "🐱</h2>");
-                            echo ("<p> Description : " . $_SESSION['biography'] . "</p>");
-                        }
-                    }
+                             $stmt = $pdo->prepare("SELECT biography FROM users WHERE id = ?");
+                                $stmt->execute([$_SESSION['user_id']]);
+                                $user = $stmt->fetch();
 
-                    ?>
+                                echo "<h2>Bienvenue " . htmlspecialchars($_SESSION['pseudo']) . " 🐱</h2>";
+                                echo "<p><strong>Description :</strong> " . htmlspecialchars($user['biography']) . "</p>";
+                                ?>
 
+                                <form method="POST">
+                                    <label for="biography">Modifier votre biographie :</label><br>
+                                    <textarea name="biography" id="biography" required><?= htmlspecialchars($user['biography']) ?></textarea><br>
+                                     <button type="submit" class="submit">Mettre à jour</button>
+                                </form>
+
+                            <?php
+                            }}
+                            ?>
+
+ 
         </section>
     </main>
     <footer>

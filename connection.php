@@ -49,10 +49,10 @@ if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion
     <form id="loginForm" method="post"> <!-- a la place de faire le link avec traitement conenction via l'url on fait avec le js ci dessous-->
         <input type="hidden" name="token" value="<?= $_SESSION['token_connexion_add']; ?>">
 
-        <label for="pseudo">Pseudo</label>
+        <label for="pseudo">Pseudo(needed)</label>
         <input type="text" name="pseudo" id="pseudo" required>
 
-        <label for="password">Mot de passe</label>
+        <label for="password">Password(needed)</label>
         <input type="password" name="password" id="password" required>
 
          <button type="submit" class="submit">Se connecter</button>

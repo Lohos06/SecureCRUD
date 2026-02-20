@@ -12,6 +12,7 @@ form {
 input, textarea {
     background-color: var(--bgSecondary);
     color: var(--textPrimary);
+    
     padding: 1rem;
     border-radius: 0.5rem;
 }
