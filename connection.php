@@ -62,7 +62,7 @@ if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion
         <label for="password">Mot de passe</label>
         <input type="password" name="password" id="password" required>
 
-         <button type="submit" class="submit">S'inscrire</button>
+         <button type="submit" class="submit">Se connecter</button>
     </form>
 
     <div id="responseMessage"></div>
