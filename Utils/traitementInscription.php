@@ -8,8 +8,6 @@ header('Content-Type: application/json');
 
 $errors = [];
 
-/*partie inscription*/
-
 /* verif token */
 if (
     !isset($_POST['token']) ||
@@ -50,7 +48,7 @@ if (!empty($pseudo)) {
 $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/';
 
 if (!empty($plainPassword) && !preg_match($password_pattern, $plainPassword)) {
-    $errors[] = "Mot de passe trop faible.Veuillez fire en osrte qu'il y'a 8 caractere dont une majuscule,minuscule charactere speciaux et chiffre";
+    $errors[] = "Mot de passe trop faible. Veuillez faire en sorte qu’il contienne au moins 8 caractères, dont une majuscule, une minuscule, un caractère spécial et un chiffre.";
 }
 
 /* S'il y a des erreurs on renvoie les 2erreur */
@@ -68,14 +66,15 @@ $hashedPassword = password_hash($plainPassword, PASSWORD_BCRYPT);
 
 /* insertion */
 $insert = $pdo->prepare(
-    'INSERT INTO users (pseudo, password, biography)
-     VALUES (:pseudo, :password, :biography)'
+    'INSERT INTO users (pseudo, password, biography, role)
+     VALUES (:pseudo, :password, :biography, :role)'
 );
 
 $insert->execute([
     'pseudo' => htmlspecialchars($pseudo),
     'password' => $hashedPassword,
-    'biography' => htmlspecialchars($biography)
+    'biography' => htmlspecialchars($biography),
+    'role' => 'user'
 ]);
 
 /* regeneration token */
