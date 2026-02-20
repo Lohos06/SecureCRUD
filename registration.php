@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const formData = new FormData(form);
 
-        fetch("Utils/traitement.php", {
+        fetch("Utils/traitementInscription.php", {
             method: "POST",
             body: formData,
             headers: {

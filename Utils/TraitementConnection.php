@@ -61,8 +61,9 @@ if (!$user || !password_verify($plainPassword, $user['password'])) {
 /* youhou connexion réussi*/
 $_SESSION['user_id'] = $user['id'];
 $_SESSION['pseudo'] = $user['pseudo'];
+$_SESSION['role'] = $user['role'];
 
-/* Régénération token */
+/* régénération token */
 $_SESSION['token_connexion_add'] = bin2hex(random_bytes(32));
 
 ob_clean();
