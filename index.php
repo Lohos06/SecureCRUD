@@ -3,6 +3,7 @@
 require_once "./Utils/safeHeaders.php";
 require_once "./Utils/sessionStart.php";
 
+// verification si connecté
 if(!isset($_SESSION['user_id'])) {
     header("Location: connection.php");
 }
