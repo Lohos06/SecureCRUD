@@ -9,8 +9,6 @@ if(!isset($_SESSION['user_id'])) {
 
 require_once "./Utils/BDDAdmin.php";
 
-var_dump($_SESSION);
-
 ?>
 
 <!DOCTYPE html>

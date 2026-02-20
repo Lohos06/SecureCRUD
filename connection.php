@@ -45,14 +45,7 @@ if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion
 
 <main>
 <section>
-
-<?php if (isset($_SESSION['pseudo'])): ?>
-    <h2>Bienvenue <?= htmlspecialchars($_SESSION['pseudo']) ?> 🐱</h2> <!--recup le pseudo pour l'afficher -->
-    <p>Vous êtes connecté.</p>
-<?php else: ?>
-
     <h2>Connexion</h2>
-
     <form id="loginForm" method="post"> <!-- a la place de faire le link avec traitement conenction via l'url on fait avec le js ci dessous-->
         <input type="hidden" name="token" value="<?= $_SESSION['token_connexion_add']; ?>">
 
@@ -64,11 +57,7 @@ if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion
 
          <button type="submit" class="submit">Se connecter</button>
     </form>
-
     <div id="responseMessage"></div>
-
-<?php endif; ?>
-
 </section>
 </main>
 
