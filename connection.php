@@ -1,15 +1,16 @@
 <?php
 
-if(!isset($_SESSION['user_id'])) {
+require_once "./Utils/sessionStart.php";
+
+if(isset($_SESSION['user_id'])) {
     header("Location: index.php");
 }
-
-require_once "./Utils/sessionStart.php";
 
 /* toekn connexion */
 if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion_add'])) {
     $_SESSION['token_connexion_add'] = bin2hex(random_bytes(32));
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +38,8 @@ if (!isset($_SESSION['token_connexion_add']) || empty($_SESSION['token_connexion
     <nav>
         <a href="/index.php">HomePage</a>
         <a href="/registration.php">Registration</a>
-        <a href="/connection.php">Connexion</a>
+        <a href="/connection.php">Connection</a>
+        <a href="/Utils/sessionDestory.php">Deconnexion</a>
     </nav>
 </header>
 

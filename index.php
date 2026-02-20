@@ -3,7 +3,13 @@
 require_once "./Utils/safeHeaders.php";
 require_once "./Utils/sessionStart.php";
 
+if(!isset($_SESSION['user_id'])) {
+    header("Location: connection.php");
+}
+
 require_once "./Utils/BDDAdmin.php";
+
+var_dump($_SESSION);
 
 ?>
 
@@ -33,6 +39,7 @@ require_once "./Utils/BDDAdmin.php";
             <a href="/index.php">HomePage</a>
             <a href="/registration.php">Registration</a>
             <a href="/connection.php">Connection</a>
+            <a href="/Utils/sessionDestory.php">Deconnexion</a>
         </nav>
     </header>
     <main>
