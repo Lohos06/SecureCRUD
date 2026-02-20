@@ -7,8 +7,6 @@ if(!isset($_SESSION['user_id'])) {
     header("Location: connection.php");
 }
 
-require_once "./Utils/BDDAdmin.php";
-
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +43,7 @@ require_once "./Utils/BDDAdmin.php";
                 <?php
                     if(isset($_SESSION['user_id'])) {
                         if($_SESSION['role'] === "admin") {
+                            require_once "./Utils/BDDAdmin.php";
                             $users = $pdo->prepare('SELECT * FROM users');
                             $users->execute([]); 
                             echo "<table>
@@ -57,6 +56,7 @@ require_once "./Utils/BDDAdmin.php";
                                             <th scope='col'>Pseudo</th>
                                             <th scope='col'>biography</th>
                                             <th scope='col'>role</th>
+                                            <th scope='col'>supprimer</th>
                                         </tr>
                                     </thead>
                                     <tbody>";
@@ -68,6 +68,11 @@ require_once "./Utils/BDDAdmin.php";
                                             <td>" . $user["pseudo"] . "</td>
                                             <td>" . $user["biography"] . "</td>
                                             <td>" . $user["role"] . "</td>
+                                            <td><form action='Utils/DeleteUser.php' method='POST'>
+                                                    <input type='hidden' name='id' value=" . $user['id'] . ">
+                                                    <input type='submit' value='Supprimer'>
+                                                </form>
+                                            </td>
                                         </tr>
                                     ";
                                 }

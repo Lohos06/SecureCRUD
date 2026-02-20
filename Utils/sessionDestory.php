@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once "sessionStart.php";
 
 if(isset($_SESSION)) {
     session_destroy();
