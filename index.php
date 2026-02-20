@@ -31,8 +31,8 @@ require_once "./Utils/BDDAdmin.php";
         <h1>Secure User</h1>
         <nav>
             <a href="/index.php">HomePage</a>
-            <a href="/registration.php">registration</a>
-            <a href="/connection.php">connection</a>
+            <a href="/registration.php">Registration</a>
+            <a href="/connection.php">Connection</a>
         </nav>
     </header>
     <main>
@@ -52,21 +52,29 @@ require_once "./Utils/BDDAdmin.php";
                 </thead>
                 <tbody>
                     <?php
-                    $users = $pdo->prepare('SELECT * FROM users');
-                    $users->execute([]); 
-                    foreach ($users as $user) {
-                        if(isset($user)) {
-                            echo "
-                                <tr>
-                                    <th scope='row'>" . $user["id"] . "</th>
-                                    <td>" . $user["pseudo"] . "</td>
-                                    <td>" . $user["password"] . "</td>
-                                    <td>" . $user["biography"] . "</td>
-                                    <td>" . $user["role"] . "</td>
-                                </tr>
-                            ";
+
+                    if(isset($_SESSION['user_id'])) {
+                        if($_SESSION['role'] === "admin") {
+                            $users = $pdo->prepare('SELECT * FROM users');
+                            $users->execute([]); 
+                            foreach ($users as $user) {
+                                if(isset($user)) {
+                                    echo "
+                                        <tr>
+                                            <th scope='row'>" . $user["id"] . "</th>
+                                            <td>" . $user["pseudo"] . "</td>
+                                            <td>" . $user["password"] . "</td>
+                                            <td>" . $user["biography"] . "</td>
+                                            <td>" . $user["role"] . "</td>
+                                        </tr>
+                                    ";
+                                }
+                            }
+                        } else {
+                            echo ("Bienvenue " . $_SESSION['pseudo']);
                         }
                     }
+
                     ?>
                 </tbody>
             </table>

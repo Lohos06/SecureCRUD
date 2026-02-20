@@ -1,5 +1,9 @@
 <?php
 
+if(!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+}
+
 require_once "./Utils/sessionStart.php";
 
 /* toekn connexion */
