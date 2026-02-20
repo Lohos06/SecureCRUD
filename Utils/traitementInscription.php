@@ -74,8 +74,16 @@ $insert->execute([
     'pseudo' => htmlspecialchars($pseudo),
     'password' => $hashedPassword,
     'biography' => htmlspecialchars($biography),
-    'role' => 'user'
+    'role' => 'user' /*role par defaut user*/
 ]);
+/* récupérer l'id du nouvel utilisateur */
+$userId = $pdo->lastInsertId();
+
+/* connexion automatique après inscription */
+$_SESSION['user_id'] = $userId;
+$_SESSION['pseudo'] = $pseudo;
+$_SESSION['role'] = 'user';
+$_SESSION['biography'] = $biography;
 
 /* regeneration token */
 $_SESSION['token_form_add'] = bin2hex(random_bytes(32));
@@ -84,7 +92,7 @@ ob_clean();
 echo json_encode([
     'status' => 'success',
     'message' => 'Inscription réussie !',
-    'newToken' => $_SESSION['token_form_add']
+    'redirect' => 'index.php'
 ]);
 
 exit();
